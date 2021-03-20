@@ -432,7 +432,6 @@ void do_update_race(TTWATCH *watch, char *race)
     race += num;
     if (!*race++)
     {
-        return;
         write_log(1, "Invalid race data specified\n");
         return;
     }

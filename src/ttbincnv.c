@@ -57,7 +57,7 @@ void help(char *argv[])
     printf("  -l, --laps=[list]                         Replace the laps recorded on the watch with a list of\n");
     printf("                                            alternative laps.\n");
     printf("  -S, --open-elevation-server=[connection]  Set connection for an open-elevation server.\n");
-    printf("                                            Default: http://0.0.0.0:10000/api/v1/lookup (Assuming you run your own local open-elevation server.)\n");
+    printf("                                            Default: http://0.0.0.0:8080/api/v1/lookup (Assuming you run your own local open-elevation server.)\n");
     printf("                                            Maybe https://api.open-elevation.com/api/v1/lookup is available.\n");
     printf("  -s, --server-type=[type]                  Specify the type of server you will connect.\n");
     printf("                                            Available:\n");
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     };
     char short_options[OPTION_COUNT + 3 + 1] = "hl:aEs:S:";
 
-    opt = strlen(short_options);
+    opt = 6; // strlen(short_options);
     for (i = 0; i < OFFLINE_FORMAT_COUNT; ++i)
     {
         if (OFFLINE_FORMATS[i].producer)

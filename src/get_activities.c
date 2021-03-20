@@ -60,8 +60,6 @@ static void create_directory_name(DGACallback *c, struct tm timestamp)
     strcat(dir_name, "/");
     if (ttwatch_get_watch_name(c->watch, dir_name + strlen(dir_name), sizeof(dir_name) - strlen(dir_name)) == TTWATCH_NoError)
         strcat(dir_name, "/");
-    sprintf(dir_name + strlen(dir_name), "%04d-%02d-%02d",
-        timestamp.tm_year + 1900, timestamp.tm_mon + 1, timestamp.tm_mday);
     _mkdir(dir_name);
     chdir(dir_name);
 }
@@ -106,8 +104,8 @@ static void do_get_activities_callback(uint32_t id, uint32_t length, void *cbdat
     if (ttbin)
         sprintf(filename, "%s", create_filename(ttbin, "ttbin"));
     else
-        sprintf(filename, "Unknown_%d-%d-%d_%d.ttbin", timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec, length);
-
+        sprintf(filename, "%04d%02d%02d_%02d-%02d-%02d_%d_Unknown.ttbin", (timestamp.tm_year+1900), (timestamp.tm_mon+1),
+                timestamp.tm_mday, timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec, length);
     /* write the ttbin file */
     f = fopen(filename, "w+");
     if (f)

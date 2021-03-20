@@ -948,8 +948,7 @@ const char *create_filename(TTBIN_FILE *ttbin, const char *ext)
     case ACTIVITY_SKIING:       type = "Skiing"; break;
     case ACTIVITY_SNOWBOARDING: type = "Snowboarding"; break;
     }
-    sprintf(filename, "%s_%02d-%02d-%02d.%s", type, time->tm_hour, time->tm_min, time->tm_sec, ext);
-
+    sprintf(filename, "%04d%02d%02d_%02d-%02d-%02d_%s.%s",  (time->tm_year+1900), (time->tm_mon+1), time->tm_mday, time->tm_hour, time->tm_min, time->tm_sec, type, ext);
     return filename;
 }
 
@@ -1239,7 +1238,10 @@ void download_elevation_data_tomtom(TTBIN_FILE *ttbin)
 
     /* only download elevation data if we have GPS records */
     if (!ttbin || !ttbin->gps_records.count || !ttbin->gps_records.records)
+    {
+        fprintf(stderr, "Skip download elevation data.\n");
         return;
+    }
 
     curl = curl_easy_init();
     if (!curl)
@@ -1332,7 +1334,7 @@ void download_elevation_data_openelevation(TTBIN_FILE *ttbin, char* connection)
     else
     {
         //curl_easy_setopt(curl, CURLOPT_URL, "https://api.open-elevation.com/api/v1/lookup");
-        curl_easy_setopt(curl, CURLOPT_URL, "http://0.0.0.0:10000/api/v1/lookup");    
+        curl_easy_setopt(curl, CURLOPT_URL, "http://0.0.0.0:8080/api/v1/lookup");    
     }
     
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data);
